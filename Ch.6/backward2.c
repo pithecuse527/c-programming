@@ -1,15 +1,8 @@
-//
-//  backward.c
-//  Print the string backward.
-//
-//  Created by Ji Hong Guen on 9/12/18.
-//  Copyright © 2018 Ji Hong Guen. All rights reserved.
-//
-
-#include <string.h>
+#include <stdio.h>
+#include "StringCount.c"
 #define MAX_SIZE 100
 
-int main()
+int main(int argc, char const *argv[])
 {
   // The string.
   char str[MAX_SIZE];
@@ -22,12 +15,13 @@ int main()
 
   // Taking string from user and show the string that typed.
   printf("Eng & Num (not more than 100) : ");
-  scanf("%s", &str);
+  scanf("%s", str);
   printf("\n");
   printf("You typed : %s\n", str);
 
   printf("Changed : ");
-  str_cnt = strlen(str);
+  //str_cnt = strlen(str);
+  str_cnt = strCounter1(str);
 
   // Show the character of string from the end of the string to the start of the string.
   for(i = str_cnt; i >= 0; i--)
@@ -36,4 +30,5 @@ int main()
   printf("\n\n");
 
   return 0;
+
 }

@@ -16,13 +16,14 @@ int main()
 
     while(1)
     {
-      printf("R4 : ");
-      scanf("%f", &R4);
-      if(!R4) break;
+      printf("Current R3 : %f\n", R3);
+      printf("l1 : ");
+      scanf("%f", &l1);
+      if(!l1) break;
 
-      l1 = (100.0 * R3) / (R3 + R4);
+      R4 = (100.0-l1)*(R3/l1);
 
-      printf("l1 : %f\n\n", l1);
+      printf("R4 : %f\n\n", R4);
     }
   }
 
