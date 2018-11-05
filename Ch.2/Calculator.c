@@ -15,7 +15,7 @@ int main()
   calculator();
 
   return 0;
-  
+
 }
 
 void calculator(void)
@@ -39,7 +39,7 @@ void calculator(void)
 
     // announce to user.
     printf("\n ========== <1>Addition <2>Subtraction <3>Product <4>Division <5>Quit ========== \n");
-    printf("What kind of operator that you use for %d %d ? : ", num1, num2);
+    printf("What kind of operator you use for %d %d ? : ", num1, num2);
     scanf("%d", &operator);
 
     // do the task according to operator's value.

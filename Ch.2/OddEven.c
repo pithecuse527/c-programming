@@ -21,7 +21,7 @@ int main()
   scanf("%d", &num);
 
   // tell user whether it is odd or even.
-  if (num % 2 == 0) st = "even";
+  if (!(num % 2)) st = "even";
   printf("It is %s number.\n\n", st);
 
   return 0;

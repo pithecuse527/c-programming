@@ -5,7 +5,7 @@ void reciprocal2(void);
 
 int main()
 {
-  reciprocal1();
+  reciprocal2();
   return 0;
 
 }
@@ -17,7 +17,7 @@ void reciprocal1()
   while(1)
   {
 
-    if (n == 0) break;
+    if (!n) break;
 
     printf("Type n : ");
     scanf("%d", &n);
@@ -37,9 +37,9 @@ void reciprocal2(void)
     printf("Type n : ");
     scanf("%d", &n);
 
-    if (n == 0) continue;
+    if (!n) continue;
 
-    printf("The result : %f\n\n", 1/((float)n));
+    printf("The result : %f\n\n", 1/(float)n);
 
   }
 
