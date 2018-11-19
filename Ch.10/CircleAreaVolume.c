@@ -1,28 +1,28 @@
 #include <stdio.h>
 #include <math.h>
+#define PI 4*atan(1)
 
-float areaCalc(float r);
-float volumeCalc(float r);
+void compute(double r, double *area, double *circum);
 
 int main()
 {
-    float r;
+    double r;
+    double area, circum;
 
     printf("Type the radiuous : ");
-    scanf("%f", &r);
+    scanf("%lf", &r);
 
-    printf("The area : %.3f\n", areaCalc(r));
-    printf("The volume : %.3f\n\n", volumeCalc(r));
+    compute(r, &area, &circum);
+
+    printf("The area : %.5f\n", area);
+    printf("The volume : %.5f\n\n", circum);
 
     return 0;
 }
 
-float areaCalc(float r)
+void compute(double r, double *area, double *circum)
 {
-  return r*r*(atan(1)*4);
-}
+  *area = 2 * r * PI;
+  *circum = r * r * PI;
 
-float volumeCalc(float r)
-{
-  return (4.0 / 3) * (atan(1)*4) * r * r * r;
 }

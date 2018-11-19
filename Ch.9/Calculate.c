@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <math.h>
-#define PI (4 * atan(1))
 
 void compute(double r, double *area, double *circum);
 
@@ -20,8 +19,6 @@ main()
 
 void compute(double r, double *area, double *circum)
 {
-
   *area = 4 * atan(1) * r * r;
   *circum = 2 * 4 * atan(1) * r;
-
 }
