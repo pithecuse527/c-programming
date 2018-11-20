@@ -13,7 +13,7 @@ typedef struct complex {
 typedef struct complex *c_ptr;
 
 void calculator(c_ptr x, c_ptr y);
-Complex* addi(double a, double b, double c, double d);			// Divide the task. Make Complex structure element and return it.
+Complex* addi(double a, double b, double c, double d);  // Divide the task. Make Complex structure element and return it.
 Complex* subt(double a, double b, double c, double d);
 Complex* prod(double a, double b, double c, double d);
 Complex* divi(double a, double b, double c, double d);
@@ -36,6 +36,9 @@ main()
 	scanf("%lf", &(y -> im));
 
 	calculator(x, y);
+
+  free(x);
+  free(y);
 
 }
 
