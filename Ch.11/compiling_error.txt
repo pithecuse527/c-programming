@@ -1,0 +1,9 @@
+/Users/ji/Library/Mobile Documents/com~apple~CloudDocs/UOU/2018/프밍II/source/Ch.11/GetPutCh2.c:26:24: warning: implicit declaration of function 'putch' is invalid in C99 [-Wimplicit-function-declaration]
+    for(i=0; i<4; i++) putch(input[i]);
+                       ^
+1 warning generated.
+Undefined symbols for architecture x86_64:
+  "_putch", referenced from:
+      _main in GetPutCh2-877236.o
+ld: symbol(s) not found for architecture x86_64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
