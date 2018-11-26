@@ -3,7 +3,7 @@
 
 void uppLowCh1();
 void uppLowCh2();
-void fileTest1();
+void fileTest1();					// Based on Windows OS.
 void fileTest2();
 void mkFile();
 
@@ -19,7 +19,7 @@ void uppLowCh1()
 {
 	char c;
 
-	printf("문자열 입력 : ");
+	printf("Type the string : ");
 	while ((c = getchar()) != EOF)
 	{
 		if (c >= 'A' && c <= 'Z') printf("%c", c + ('a' - 'A'));
@@ -32,7 +32,7 @@ void uppLowCh2()
 {
 	char c;
 
-	printf("문자열 입력 : ");
+	printf("Type the string : ");
 	while ((c = getchar()) != EOF)
 	{
 		if (isupper(c)) printf("%c", tolower(c));
@@ -91,7 +91,7 @@ void fileTest2()
 
 	while (*sp)
 	{
-		if (*sp == ' ' || *sp == NULL) count++;
+		if (*sp == ' ') count++;
 		sp++;
 	}
 
