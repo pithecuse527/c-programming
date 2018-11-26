@@ -11,6 +11,7 @@ void fileTest5();
 void fileTest6();
 void fileTest7();
 void buffTest();
+void address();
 void mkFile();
 void randAccess();
 
@@ -18,7 +19,7 @@ void randAccess();
 void main()
 {
 
-	fileTest6();
+	address();
 
 }
 
@@ -284,6 +285,80 @@ void randAccess()
 	printf("fseek(fp, -1, SEEK_END) = %c \n", fgetc(fp));
 
 	fclose(fp);
+
 	return 0;
 
+}
+
+void gugudan()
+{
+	FILE *wfp;
+	int i, k;
+
+	wfp = fopen("c:/tmp/gugu.txt", "w");
+
+	for (i = 2; i <= 9; i++)
+		fprintf(wfp, " #제%d단# ", i);
+	fprintf(wfp, "\n\n");
+
+	for (i = 1; i <= 9; i++)
+	for (k = 2; k <= 9; k++)
+		fprintf(wfp, "%2dX%2d ", k, i, k*i);
+	fprintf(wfp, "\n");
+
+	fclose(wfp);
+
+}
+
+void address()
+{
+	FILE *wfp;
+	char tmp[100];
+	int menu;
+
+	printf("======= 주소록 =====\n");
+	printf("1. 추가\n");
+	printf("2. 수정\n");
+	printf("3. 검색\n");
+	printf("4. 종료\n");
+	printf("======================\n");
+
+	printf("메뉴 선택 : ");
+	scanf("%d", &menu);
+
+	switch (menu)
+	{
+		case 1:
+			wfp = fopen("c:/tmp/address.txt", "a");
+
+			fprintf(wfp, "이름 : ");
+			printf("이름 : ");
+			scanf("%s", tmp);
+			fprintf(wfp, "%s\n", tmp);
+
+			fprintf(wfp, "폰번 : ");
+			printf("폰번 : ");
+			scanf("%s", tmp);
+			fprintf(wfp, "%s\n", tmp);
+			
+			fprintf(wfp, "===============\n");
+		case 3:
+			wfp = fopen("c:/tmp/address.txt", "r");
+			int i = 0;
+			while (!feof(wfp))
+			{
+				i++;
+				fgets(tmp, 100, wfp);
+				printf("Read from file ==> ");
+				puts(tmp);
+				
+				
+			}
+
+		
+
+	}
+	
+
+	fclose(wfp);
 }
