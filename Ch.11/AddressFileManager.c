@@ -6,7 +6,6 @@
 //  Copyright © 2018 Ji Hong Guen. All rights reserved.
 //
 
-
 #include <stdio.h>
 #include <string.h>
 #define MAX_STR_LEN 50
@@ -19,6 +18,12 @@
 #define SEARCH 3
 #define SAVE 4
 #define QUIT 5
+#define COMPARE_2_CASES(c1, c2) ((c1 < c2) ? 0 : 1)
+#define SWAP(x,y,t) ((t) = (x), (x) = (y), (y) = (t))
+#define MALLOC(p, t, s)  if( !(p = (t*)malloc(s))  ){\
+			                   fprintf(stderr, "Insufficient memory!");\
+		  	                 exit(EXIT_FAILURE);\
+			                   }
 
 typedef enum _FIELD_TYPE {
   usr_delimeter,
@@ -33,24 +38,26 @@ typedef struct person{
   char pnum[20];
 } Person;
 
-int fieldType(char *str);
-void pull(FILE *rfp, Person *p_list, int *last_loc);
-void prtUsers(Person *p_list, int from, int to);
-void insert(Person *p_list, int *last_loc);
-void retouch(Person *p_list, int last_loc);
-Person* search(Person *p_list, char *target, int last_loc);
-void save(Person *p_list, int last_loc);
+int fieldType(char *str);      // Check the parameter str's field type.
+void pull(FILE *rfp, Person *p_list, int *last_loc);    // Pull info. from address file.
+void prtUsers(Person *p_list, int from, int to);        // print all user's info.
+void insert(Person *p_list, int *last_loc);             // insert to list.
+void retouch(Person *p_list, int last_loc);             // modify from list.
+Person* search(Person *p_list, char *target, int last_loc);   // returns target's location.
+void save(Person *p_list, int last_loc);                // write to address file.
+//void bubbleSort(Person *p_lst, int last_loc);
 
 void main()
 {
   int menu;
   Person p_list[10];
-  int last_loc = 0;          // this is always indicate the loation of end of user's palce+1.
+  int last_loc = 0;          // this always indicate index of last location plus 1.
   char tmp_name[20];
 
   // Open address text file and pull information from it.
   FILE *rfp = fopen("Desktop/address.txt", "r");
   pull(rfp, p_list, &last_loc);
+
 
   while(1)
   {
@@ -84,12 +91,12 @@ void main()
                        pull(rfp, p_list, &last_loc);
                        break;
       case QUIT       : return;
-    }
-  }
+    } // switch
+  } // while
 
 }
 
-// Check the parameter str's field type.
+
 int fieldType(char *str)
 {
   // Delimit the parameter's field.
@@ -232,9 +239,9 @@ void retouch(Person *p_list, int last_loc)
 Person* search(Person *p_list, char *target, int last_loc)
 {
   int i = 0;
-  while(strcmp(p_list -> name, target))       // this will do basis level's role.
+  while(strcmp(p_list -> name, target))       // search p_list until it reaches end or finds target.
   {
-    if(i == last_loc)
+    if(i == last_loc)         // if there is no target, return NULL.
     {
       printf("Cant find %s\n\n", target);
       return NULL;
@@ -261,4 +268,21 @@ void save(Person *p_list, int last_loc)
     p_list++;
   }
   fclose(wfp);
+	printf("Saved!\n");
 }
+
+
+//
+// void bubbleSort(Person *p_lst, int last_loc)
+// {
+//     int i, j, k=0;
+//     Person *tmp;
+//
+//     for(i=last_loc-1; i>0; i--)
+//         for(j=0; j<i; j++)
+//             //if( COMPARE_2_CASES(lst[j], lst[j+1]) ) SWAP(lst[j], lst[j+1], tmp);
+//               while(p_lst -> name + k && (p_lst+1) -> name + k)
+//                 if( COMPARE_2_CASES(*(p_lst -> name + k), *((p_lst+1) -> name + k)) )
+//                   SWAP(p_lst, p_lst+1, tmp);
+//
+// }
