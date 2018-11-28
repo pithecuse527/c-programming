@@ -16,14 +16,11 @@
 #define ADD 1
 #define RETOUCH 2
 #define SEARCH 3
-#define SAVE 4
-#define QUIT 5
+#define SORT 4
+#define SAVE 5
+#define QUIT 6
 #define COMPARE_2_CASES(c1, c2) ((c1 < c2) ? 0 : 1)
 #define SWAP(x,y,t) ((t) = (x), (x) = (y), (y) = (t))
-#define MALLOC(p, t, s)  if( !(p = (t*)malloc(s))  ){\
-			                   fprintf(stderr, "Insufficient memory!");\
-		  	                 exit(EXIT_FAILURE);\
-			                   }
 
 typedef enum _FIELD_TYPE {
   usr_delimeter,
@@ -45,7 +42,9 @@ void insert(Person *p_list, int *last_loc);             // insert to list.
 void retouch(Person *p_list, int last_loc);             // modify from list.
 Person* search(Person *p_list, char *target, int last_loc);   // returns target's location.
 void save(Person *p_list, int last_loc);                // write to address file.
-//void bubbleSort(Person *p_lst, int last_loc);
+void bubbleSort(Person *p_list, int last_loc);					// bubble sort.
+
+static const char *FILE_LOC = "c:/tmp/address.txt";		// define file location.
 
 void main()
 {
@@ -54,10 +53,18 @@ void main()
   int last_loc = 0;          // this always indicate index of last location plus 1.
   char tmp_name[20];
 
-  // Open address text file and pull information from it.
-  FILE *rfp = fopen("Desktop/address.txt", "r");
-  pull(rfp, p_list, &last_loc);
+  // open address text file and pull information from it.
+  FILE *rfp = fopen(FILE_LOC, "r");
 
+	if(!rfp)					// before pull, if there is no address.txt database file, create one.
+	{
+		fclose(rfp);
+		rfp = fopen(FILE_LOC, "w");
+		fclose(rfp);
+		rfp = fopen(FILE_LOC, "r");
+	}
+
+  pull(rfp, p_list, &last_loc);
 
   while(1)
   {
@@ -66,8 +73,9 @@ void main()
     printf("1. Add\n");
     printf("2. Retouch\n");
     printf("3. Search\n");
-    printf("4. Save\n");
-    printf("5. Quit\n");
+		printf("4. Align\n");									// Attention!
+    printf("5. Save\n");
+    printf("6. Quit\n");
     printf("======================\n\n");
 
     printf("Choose from menu : ");
@@ -84,11 +92,15 @@ void main()
                        scanf("%s", tmp_name);
                        search(p_list, tmp_name, last_loc);
                        break;
+			case SORT      :
+											 bubbleSort(p_list, last_loc);
+											 printf("Sorted!\n");
+											 //break;									// automatically save after sort.
       case SAVE      :
                        fclose(rfp);
                        save(p_list, last_loc);
-                       rfp = fopen("Desktop/address.txt", "r");
-                       pull(rfp, p_list, &last_loc);
+                       rfp = fopen(FILE_LOC, "r");		// save and pull again,
+                       pull(rfp, p_list, &last_loc);							// so that user can do other task.
                        break;
       case QUIT       : return;
     } // switch
@@ -132,7 +144,7 @@ void pull(FILE *rfp, Person *p_list, int *last_loc)
 
     if(feof(rfp)) break;      // basis level. If file string pointer reaches end.
 
-    switch(fieldType(s))
+    switch(fieldType(s))			// Not completed. Need to use subroutine.
     {
       case 1:
         while(s[++count] != ':');                               // find delemiter.
@@ -192,7 +204,7 @@ void insert(Person *p_list, int *last_loc)
   scanf("%s", tmp_addr);
   strcpy((p_list + *last_loc) -> addr, tmp_addr);
 
-  *last_loc += 1;
+  *last_loc += 1;						// modify the last location.
 
 }
 
@@ -207,18 +219,7 @@ void retouch(Person *p_list, int last_loc)
   printf("Type the user name that you want to retouch :  ");
   scanf("%s", tmp_name);
 
-  // while(strcmp(p_list -> name, tmp_name))       // this will do basis level's role.
-  // {
-  //   if(i == *last_loc)
-  //   {
-  //     printf("Cant find %s\n\n", tmp_name);
-  //     return;
-  //   }
-  //   i++;
-  //   p_list++;
-  // }
-
-  p_list = search(p_list, tmp_name, last_loc);
+  p_list = search(p_list, tmp_name, last_loc);			// find where to modify.
   if(p_list)
   {
     printf("\nYou have chosen the user above.\n");
@@ -258,7 +259,7 @@ Person* search(Person *p_list, char *target, int last_loc)
 void save(Person *p_list, int last_loc)
 {
   int i;
-  FILE *wfp = fopen("Desktop/address.txt", "w");
+  FILE *wfp = fopen(FILE_LOC, "w");
   for(i=0; i < last_loc; i++)
   {
     fprintf(wfp, "Name : %s\n", p_list -> name);
@@ -271,17 +272,14 @@ void save(Person *p_list, int last_loc)
 	printf("Saved!\n");
 }
 
-//
-// void bubbleSort(Person *p_lst, int last_loc)
-// {
-//     int i, j, k=0;
-//     Person *tmp;
-//
-//     for(i=last_loc-1; i>0; i--)
-//         for(j=0; j<i; j++)
-//             //if( COMPARE_2_CASES(lst[j], lst[j+1]) ) SWAP(lst[j], lst[j+1], tmp);
-//               while(p_lst -> name + k && (p_lst+1) -> name + k)
-//                 if( COMPARE_2_CASES(*(p_lst -> name + k), *((p_lst+1) -> name + k)) )
-//                   SWAP(p_lst, p_lst+1, tmp);
-//
-// }
+void bubbleSort(Person *p_list, int last_loc)
+{
+    int i, j;
+    Person tmp;
+
+    for(i=last_loc-1; i>0; i--)
+    	for(j=0; j<i; j++)
+				// if strcmp returns positive number, it means right one is precede the left one.
+      	if(strcmp((p_list+j) -> name, (p_list+j+1) -> name) > 0) SWAP(p_list[j], p_list[j+1], tmp);
+
+}
