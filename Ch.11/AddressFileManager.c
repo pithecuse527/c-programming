@@ -271,7 +271,6 @@ void save(Person *p_list, int last_loc)
 	printf("Saved!\n");
 }
 
-
 //
 // void bubbleSort(Person *p_lst, int last_loc)
 // {
