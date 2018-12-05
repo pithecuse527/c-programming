@@ -1,15 +1,13 @@
 #include <stdio.h>
-#include <string.h>
+
+int count = 0;
 
 main()
 {
+  count++;
 
-  char s[8] = "Basic-C";
-  char a[8];
-  strncpy(a, s, 3-1);
+  printf("%d-st call\n", count);
   
-  printf("%s\n", a);
-
-  printf("\n");
+  if (count < 10) main();
 
 }
