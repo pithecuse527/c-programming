@@ -22,12 +22,15 @@ typedef struct complex {
 
 typedef struct complex *c_ptr;      // Complex(복소수) 구조체에 대한 포인터입니다. 굳이 포인터를 사용하는 이유는 아래 기술했습니다.
 
+void getComplex(c_ptr x);
+void prtComplex(c_ptr x);
 void calculator(c_ptr x, c_ptr y);  // 계산기 함수 입니다. 본 계산기 함수는 사용자의 요구에 따른 연산을 하되,
                                     // 아래에 나와 있는 함수들을 이용하여 연산된 복소수 포인터를 받아옵니다.
 Complex* addi(double a, double b, double c, double d);    // 덧셈
 Complex* subt(double a, double b, double c, double d);    // 뺄셈
 Complex* prod(double a, double b, double c, double d);    // 곱셈
 Complex* divi(double a, double b, double c, double d);    // 나눗셈
+
 
 main()
 {
@@ -37,24 +40,33 @@ main()
 	MALLOC(y, sizeof(*y));   // 윗 줄의 코드와 같다고 보시면 됩니다.
                            // 사실 Complex x를 사용해도 되지만 우리가 메모리에 대해 공부한 내용을
                            // 토대로 코드를 짜기 위함입니다.
+  getComplex(x);
+  getComplex(y);
 
-
-  // ----- 다음은 사용자로부터 값을 받아오는 과정입니다. ----- //
-	printf("Type the first complex's real numb : ");         // 받아온 값들을 x와 y에 가리키는 곳에 대입합니다.
-	scanf("%lf", &(x -> re));
-	printf("Type the first complex's imaginary numb : ");
-	scanf("%lf", &(x -> im));
-
-	printf("Type the second complex's real numb : ");
-	scanf("%lf", &(y -> re));
-	printf("Type the second complex's imaginary numb : ");
-	scanf("%lf", &(y -> im));
-  // --------------------------------------------- //
+  prtComplex(x);
+  prtComplex(y);
 
 	calculator(x, y);  // 값을 저장한 포인터를 매개변수로 전달하면서 calculator()함수를 호출합니다.
 
   free(x);          // 더 이상 필요없으니 메모리를 free 해줍니다.
   free(y);
+
+}
+
+void getComplex(c_ptr x)   // 실수부와 허수부를 받아오는 함수
+{
+  // ----- 다음은 사용자로부터 값을 받아오는 과정입니다. ----- //
+	printf("Type the complex's real numb : ");         // 받아온 값들을 x에 가리키는 곳에 대입합니다.
+	scanf("%lf", &(x -> re));
+	printf("Type the complex's imaginary numb : ");
+	scanf("%lf", &(x -> im));
+
+}
+
+void prtComplex(c_ptr x)
+{
+  printf("Real num : %lf\n", x->re);
+  printf("Img num : %lf\n", x->im);
 
 }
 
@@ -109,8 +121,6 @@ void calculator(c_ptr x, c_ptr y)
 		if (operator == 5) break;             // 5번은 종료입니다.
     if(!c && !d) continue;                // 다음 구문과 같습니다. ===> if(c == 0 && d == 0) continue;
                                           // 0으로 나누려 할 때!
-
-
 	}
 
 }
