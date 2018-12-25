@@ -87,7 +87,6 @@ void cAdd2(Complex *x, Complex *y, Complex *res)
 Complex *cAdd3(Complex x, Complex y)
 {
   Complex *res;
-
   res = malloc(sizeof(Complex));
 
   res->re = x.re + y.re;
